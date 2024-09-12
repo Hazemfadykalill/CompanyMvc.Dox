@@ -43,5 +43,37 @@ namespace CompanyMvc.Dox.PL.Controllers
             return View(department);
 
         }
+
+        public IActionResult Details(int? id)
+
+        {
+
+            if (id is null) return BadRequest();
+            var department = _repository.GetById(id);
+            if (department is null) return NotFound();
+
+            return View(department);
+
+        }
+
+        public IActionResult Update(Department department)
+
+        {
+
+
+            if (ModelState.IsValid)
+            {
+
+                var count = _repository.Update(department);
+                if (count > 0)
+                {
+                    return RedirectToAction(actionName: "Index");
+                }
+            }
+
+
+            return View(department);
+
+        }
     }
 }
