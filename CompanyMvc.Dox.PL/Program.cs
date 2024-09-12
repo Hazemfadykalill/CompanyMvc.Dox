@@ -1,3 +1,5 @@
+using CompanyMvc.Dox.DAL.Data.Contexts;
+
 namespace CompanyMvc.Dox.PL
 {
     public class Program
@@ -8,6 +10,7 @@ namespace CompanyMvc.Dox.PL
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<AppDbContext>();//add dependency Injection
 
             var app = builder.Build();
 
