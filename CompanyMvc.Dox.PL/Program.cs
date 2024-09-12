@@ -1,3 +1,5 @@
+using CompanyMvc.Dox.BLL.Interfaces;
+using CompanyMvc.Dox.BLL.Repositories;
 using CompanyMvc.Dox.DAL.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +19,7 @@ namespace CompanyMvc.Dox.PL
             builder.Services.AddDbContext<AppDbContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConections")));//add dependency Injection
                //or                                                                                                                                        //or
            // builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConections"]));//add dependency Injection
+           builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();//add dependency Injection
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
