@@ -13,10 +13,14 @@ namespace CompanyMvc.Dox.DAL.Data.Contexts
     {
 
         //To Connect Database
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
         {
-            optionsBuilder.UseSqlServer(" Server = .;Database=DOX_MVC_S03;Trusted_Connection=True;TrustServerCertificate=True");
+                
         }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(" Server = .;Database=DOX_MVC_S03;Trusted_Connection=True;TrustServerCertificate=True");
+        //}
 
         //Configuration Class
         protected override void OnModelCreating(ModelBuilder modelBuilder)

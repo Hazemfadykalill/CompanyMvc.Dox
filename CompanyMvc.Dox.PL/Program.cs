@@ -1,4 +1,5 @@
 using CompanyMvc.Dox.DAL.Data.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyMvc.Dox.PL
 {
@@ -10,12 +11,16 @@ namespace CompanyMvc.Dox.PL
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<AppDbContext>();//add dependency Injection
-
+            //builder.Services.AddScoped<AppDbContext>();//add dependency Injection
+           // builder.Services.AddDbContext<AppDbContext>(options=>options.UseSqlServer(" Server = .;Database=DOX_MVC_S03;Trusted_Connection=True;TrustServerCertificate=True"));//add dependency Injection
+           //or
+            builder.Services.AddDbContext<AppDbContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConections")));//add dependency Injection
+               //or                                                                                                                                        //or
+           // builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConections"]));//add dependency Injection
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (!app.Environment.  IsDevelopment())
+            if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
