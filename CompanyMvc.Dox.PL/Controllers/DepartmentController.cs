@@ -45,7 +45,7 @@ namespace CompanyMvc.Dox.PL.Controllers
 
         }
 
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? id,string NameView= "Details")
 
         {
 
@@ -53,7 +53,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             var department = _repository.GetById(id);
             if (department is null) return NotFound();
 
-            return View(department);
+            return View(NameView,department);
 
         }
 
@@ -63,11 +63,11 @@ namespace CompanyMvc.Dox.PL.Controllers
 
         {
 
-            if (id is null) return BadRequest();
-            var department = _repository.GetById(id);
-            if (department is null) return NotFound();
+            //if (id is null) return BadRequest();
+            //var department = _repository.GetById(id);
+            //if (department is null) return NotFound();
 
-            return View(department);
+            return Details(id,"Update");
 
         }
         [HttpPost]
@@ -108,11 +108,11 @@ namespace CompanyMvc.Dox.PL.Controllers
 
         {
 
-            if (id is null) return BadRequest();
-            var department = _repository.GetById(id);
-            if (department is null) return NotFound();
+            //if (id is null) return BadRequest();
+            //var department = _repository.GetById(id);
+            //if (department is null) return NotFound();
 
-            return View(department);
+            return Details(id,"Delete");
 
         }
         [HttpPost]

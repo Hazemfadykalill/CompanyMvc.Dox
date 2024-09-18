@@ -21,7 +21,7 @@
         <input readonly asp-for="DateOfCreation" class="form-control" />
     </div>
 
-    <a asp-controller="Department" asp-action="Update" class="btn btn-warning">Update</a>
+    <a asp-controller="Department" asp-all-route-id="@Model.Id" asp-action="Update" class="btn btn-warning">Update</a>
     <a asp-controller="Department" asp-action="Index" class="btn btn-light">Back To List</a>
 </div>
 
