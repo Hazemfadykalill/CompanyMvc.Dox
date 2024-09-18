@@ -27,6 +27,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Department department)
         {
             if (ModelState.IsValid)
@@ -55,24 +56,33 @@ namespace CompanyMvc.Dox.PL.Controllers
             return View(department);
 
         }
-
-        public IActionResult Update(Department department)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult Update([FromRoute]int?id,Department department)
 
         {
+            try
+            {
+                if (id != department.Id) return BadRequest()//400
+        ;
+                if (ModelState.IsValid)
+                {
 
-
-            if (ModelState.IsValid)
+                    var count = _repository.Update(department);
+                    if (count > 0)
+                    {
+                        return RedirectToAction(actionName: "Index");
+                    }
+                }
+            }
+            catch (Exception Ex)
             {
 
-                var count = _repository.Update(department);
-                if (count > 0)
-                {
-                    return RedirectToAction(actionName: "Index");
-                }
+                ModelState.AddModelError(string.Empty, Ex.Message);
             }
 
 
-            return View(department);
+            return View(department);    
 
         }
     }

@@ -6,6 +6,7 @@
     <h1 class="text-white ">Update Department </h1>
 </div>
 <form asp-action="Update">
+    <div asp-validation-summary="All" class="w-100 h-25 justify-content-center p-5 m-5 rounded-3 shadow bg-danger"></div>
     <div class="form-group">
         <label asp-for="Code" class="col-form-label"></label>
         <input asp-for="Code" class="form-control" />
