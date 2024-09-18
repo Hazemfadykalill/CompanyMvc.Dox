@@ -56,8 +56,23 @@ namespace CompanyMvc.Dox.PL.Controllers
             return View(department);
 
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
+
+        //Update
+
+        public IActionResult Update(int? id)
+
+        {
+
+            if (id is null) return BadRequest();
+            var department = _repository.GetById(id);
+            if (department is null) return NotFound();
+
+            return View(department);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public IActionResult Update([FromRoute]int?id,Department department)
 
         {
@@ -85,5 +100,50 @@ namespace CompanyMvc.Dox.PL.Controllers
             return View(department);    
 
         }
+
+
+        //Delete
+        [HttpGet]
+        public IActionResult Delete(int? id)
+
+        {
+
+            if (id is null) return BadRequest();
+            var department = _repository.GetById(id);
+            if (department is null) return NotFound();
+
+            return View(department);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete([FromRoute] int? id, Department department)
+
+        {
+            try
+            {
+                if (id != department.Id) return BadRequest()//400
+        ;
+                if (ModelState.IsValid)
+                {
+
+                    var count = _repository.Remove(department);
+                    if (count > 0)
+                    {
+                        return RedirectToAction(actionName: "Index");
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+
+                ModelState.AddModelError(string.Empty, Ex.Message);
+            }
+
+
+            return View(department);
+
+        }
+
     }
 }
