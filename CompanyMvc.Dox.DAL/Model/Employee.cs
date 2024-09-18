@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CompanyMvc.Dox.DAL.Model
 {
-    public  class Employee
+    public  class Employee:BaseEntity
     {
-        public int Id { get; set; }
+       
         [Required(ErrorMessage ="Please Enter Your Name!!")]
         public string Name { get; set; }
 

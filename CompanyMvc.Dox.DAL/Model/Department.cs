@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace CompanyMvc.Dox.DAL.Model
 {
-    public class Department
+    public class Department:BaseEntity
     {
-        public int Id { get; set; }
+       
         [Required(ErrorMessage ="Please Enter Your Code!")]
         public int Code { get; set; }
         [Required(ErrorMessage = "Please Enter Your Name!")]

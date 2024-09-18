@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace CompanyMvc.Dox.BLL.Interfaces
 {
-    public interface IDepartmentRepository
+    public interface IDepartmentRepository:IGenericRepository<Department>
     {
-        //Get All Department
-        IEnumerable<Department> GetAll();
+        ////Get All Department
+        //IEnumerable<Department> GetAll();
 
-        //Get Department By Id
-        Department GetById(int? id);
+        ////Get Department By Id
+        //Department GetById(int? id);
 
-        //Add Department
-        int Add(Department department);
-        //Update Department
+        ////Add Department
+        //int Add(Department department);
+        ////Update Department
 
-        int Update(Department department);
-        //Delete Department
+        //int Update(Department department);
+        ////Delete Department
 
-        int Remove (Department department);
+        //int Remove (Department department);
         
     }
 }

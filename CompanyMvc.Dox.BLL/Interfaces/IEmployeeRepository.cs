@@ -8,23 +8,23 @@ using System.Threading.Tasks;
 
 namespace CompanyMvc.Dox.BLL.Interfaces
 {
-    public interface IEmployeeRepository
+    public interface IEmployeeRepository:IGenericRepository<Employee>
     {
       
 
 
-        IEnumerable<Employee> GetAll();
+        //IEnumerable<Employee> GetAll();
 
-        //Get Employee By Id
-        Employee GetById(int? id);
+        ////Get Employee By Id
+        //Employee GetById(int? id);
 
-        //Add Employee
-        int Add(Employee department);
-        //Update Employee
+        ////Add Employee
+        //int Add(Employee department);
+        ////Update Employee
 
-        int Update(Employee department);
-        //Delete Employee
+        //int Update(Employee department);
+        ////Delete Employee
 
-        int Remove(Employee employee);
+        //int Remove(Employee employee);
     }
 }
