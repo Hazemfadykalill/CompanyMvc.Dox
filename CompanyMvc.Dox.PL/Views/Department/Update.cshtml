@@ -6,20 +6,8 @@
     <h1 class="text-white ">Update Department </h1>
 </div>
 <form asp-action="Update">
-    <div class="form-group">
-        <label asp-for="Code" class="col-form-label"></label>
-        <input asp-for="Code" class="form-control" />
-        <span asp-validation-for="Code" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Name" class="col-form-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="DateOfCreation" class="col-form-label"></label>
-        <input asp-for="DateOfCreation" class="form-control" />
-    </div>
+    <div asp-validation-summary="All" class="w-100 h-25 justify-content-center p-5 m-5 rounded-3 shadow bg-danger"></div>
+    <partial name="PartialViews/SharedCodeCreateAndUpdate"></partial>
     <input type="submit" value="Save" class="btn btn-primary" />
     <a asp-controller="Department" asp-action="Index" class="btn btn-light">Back To List</a>
 </form>

@@ -1,16 +1,15 @@
-﻿@model Department
+﻿
+@model Department
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
 }
+
 <div class="w-100 m-5 text-center bg-dark shadow p-5 rounded-3">
-    <h1 class="text-white "> Details </h1>
+    <h1 class="text-white ">  You Can Delete This!! </h1>
 </div>
-<div>
+<form asp-action="Delete">
     <partial name="PartialViews/SharedCodeDelateAndDeatailsDepartment"></partial>
 
-    <a asp-controller="Department" asp-all-route-id="@Model.Id" asp-action="Update" class="btn btn-warning">Update</a>
+    <input type="submit" asp-controller="Department" asp-action="Delete" class="btn btn-danger">
     <a asp-controller="Department" asp-action="Index" class="btn btn-light">Back To List</a>
-</div>
-
-
-
+</form>

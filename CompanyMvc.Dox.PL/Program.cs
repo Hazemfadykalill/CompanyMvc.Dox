@@ -20,6 +20,7 @@ namespace CompanyMvc.Dox.PL
                //or                                                                                                                                        //or
            // builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConections"]));//add dependency Injection
            builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();//add dependency Injection
+           builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();//add dependency Injection
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

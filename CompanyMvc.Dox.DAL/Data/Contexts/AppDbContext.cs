@@ -35,6 +35,7 @@ namespace CompanyMvc.Dox.DAL.Data.Contexts
         //Names Table That In Database
       
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
     }
 }

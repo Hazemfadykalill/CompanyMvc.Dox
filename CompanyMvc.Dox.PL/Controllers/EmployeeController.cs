@@ -1,23 +1,22 @@
 ﻿using CompanyMvc.Dox.BLL.Interfaces;
-using CompanyMvc.Dox.BLL.Repositories;
 using CompanyMvc.Dox.DAL.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyMvc.Dox.PL.Controllers
 {
-    public class DepartmentController : Controller
+    public class EmployeeController : Controller
     {
-        private readonly IDepartmentRepository _repository;
-        public DepartmentController(IDepartmentRepository departmentRepository)
+        private readonly IEmployeeRepository _repository;
+        public EmployeeController(IEmployeeRepository departmentRepository)
         {
             _repository = departmentRepository;
         }
         [HttpGet]
         public IActionResult Index()
         {
-            var AllDepartments = _repository.GetAll();
+            var AllEmps = _repository.GetAll();
 
-            return View(AllDepartments);
+            return View(AllEmps);
         }
 
         [HttpGet]
@@ -28,12 +27,12 @@ namespace CompanyMvc.Dox.PL.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Department department)
+        public IActionResult Create(Employee employee)
         {
             if (ModelState.IsValid)
             {
 
-                var count = _repository.Add(department);
+                var count = _repository.Add(employee);
                 if (count > 0)
                 {
                     return RedirectToAction(actionName: "Index");
@@ -41,19 +40,19 @@ namespace CompanyMvc.Dox.PL.Controllers
             }
 
 
-            return View(department);
+            return View(employee);
 
         }
 
-        public IActionResult Details(int? id,string NameView= "Details")
+        public IActionResult Details(int? id, string NameView = "Details")
 
         {
 
             if (id is null) return BadRequest();
-            var department = _repository.GetById(id);
-            if (department is null) return NotFound();
+            var emps = _repository.GetById(id);
+            if (emps is null) return NotFound();
 
-            return View(NameView,department);
+            return View(NameView, emps);
 
         }
 
@@ -67,23 +66,23 @@ namespace CompanyMvc.Dox.PL.Controllers
             //var department = _repository.GetById(id);
             //if (department is null) return NotFound();
 
-            return Details(id,"Update");
+            return Details(id, "Update");
 
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public IActionResult Update([FromRoute]int?id,Department department)
+        public IActionResult Update([FromRoute] int? id, Employee emp)
 
         {
             try
             {
-                if (id != department.Id) return BadRequest()//400
+                if (id != emp.Id) return BadRequest()//400
         ;
                 if (ModelState.IsValid)
                 {
 
-                    var count = _repository.Update(department);
+                    var count = _repository.Update(emp);
                     if (count > 0)
                     {
                         return RedirectToAction(actionName: "Index");
@@ -97,7 +96,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             }
 
 
-            return View(department);    
+            return View(emp );
 
         }
 
@@ -112,22 +111,22 @@ namespace CompanyMvc.Dox.PL.Controllers
             //var department = _repository.GetById(id);
             //if (department is null) return NotFound();
 
-            return Details(id,"Delete");
+            return Details(id, "Delete");
 
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete([FromRoute] int? id, Department department)
+        public IActionResult Delete([FromRoute] int? id, Employee emp)
 
         {
             try
             {
-                if (id != department.Id) return BadRequest()//400
+                if (id != emp.Id) return BadRequest()//400
         ;
                 if (ModelState.IsValid)
                 {
 
-                    var count = _repository.Remove(department);
+                    var count = _repository.Remove(emp);
                     if (count > 0)
                     {
                         return RedirectToAction(actionName: "Index");
@@ -141,7 +140,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             }
 
 
-            return View(department);
+            return View(emp);
 
         }
 
