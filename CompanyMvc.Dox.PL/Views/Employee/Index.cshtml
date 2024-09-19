@@ -43,22 +43,8 @@
                     <td>@emp.HiringDate</td>
                     <td>@Html.DisplayFor(D => emp.IsActivated)</td>
                   
-
-                    <td>
-                        <a asp-controller="Employee" asp-action="Details" asp-route-id="@emp.Id" class="btn btn-warning">
-                            <i class="fas fa-eye"></i> Details
-                        </a>
-                    </td>
-                    <td>
-                        <a asp-action="Update" asp-route-id="@emp.Id" class="btn btn-success">
-                            <i class="fas fa-edit"></i> Update
-                        </a>
-                    </td>
-                    <td>
-                        <a asp-action="Delete" asp-route-id="@emp.Id" class="btn btn-danger">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
-                    </td>
+                    <partial name="ButtonsPartialView" model="@emp.Id"></partial>
+                   
                 </tr>
             }
         </tbody>
