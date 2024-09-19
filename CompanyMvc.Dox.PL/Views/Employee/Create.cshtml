@@ -1,0 +1,76 @@
+﻿ @model Employee
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="w-100 m-5 text-center bg-dark shadow p-5 rounded-3">
+    <h1 class="text-white ">Create New Department </h1>
+</div>
+
+@{
+    @*
+   
+   
+  
+    D.HiringDate)</ th >
+    D.IsActivated)</ th >*@
+}
+<form asp-action="Create">
+
+    <div class="form-group">
+        <label  asp-for="Name" class="col-form-label"></label>
+        <input   asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Age" class="col-form-label"></label>
+        <input  asp-for="Age" class="form-control" />
+        <span asp-validation-for="Age" class="text-danger"></span>
+
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email" class="col-form-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address" class="col-form-label"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="Salary" class="col-form-label"></label>
+        <input asp-for="Salary" class="form-control" />
+        <span asp-validation-for="Salary" class="text-danger"></span>
+
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="phoneNumber" class="col-form-label"></label>
+        <input asp-for="phoneNumber" class="form-control" />
+        <span asp-validation-for="phoneNumber" class="text-danger"></span>
+
+    </div>
+
+    <div class="form-group">
+        <label asp-for="HiringDate" class="col-form-label"></label>
+        <input asp-for="HiringDate" class="form-control" />
+        <span asp-validation-for="HiringDate" class="text-danger"></span>
+
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IsActivated" class="col-form-label"></label>
+        <input asp-for="IsActivated" class="form-check" />
+        <span asp-validation-for="IsActivated" class="text-danger"></span>
+
+    </div>
+    <input type="submit" value="Create" class="btn btn-primary" />
+    <a asp-controller="Employee" asp-action="Index" class="btn btn-light">Back To List</a>
+</form>

@@ -16,7 +16,7 @@ namespace CompanyMvc.Dox.DAL.Model
         [Range(10,80,ErrorMessage ="Enter Your Age Between 10 To 80")]
         public int? Age { get; set; }
         [Required(ErrorMessage = "Please Enter Your Salary!!")]
-
+        [DataType(DataType.Currency)]
         public double  Salary { get; set; }
         [RegularExpression(pattern: @"[1-9]{1,3}-[a-zA-Z]{5,10}-[a-zA-Z]{4,10}-[a-zA-Z]{5,10}$")]
         public string Address { get; set; }
