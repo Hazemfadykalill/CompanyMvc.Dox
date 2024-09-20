@@ -29,5 +29,7 @@ namespace CompanyMvc.Dox.DAL.Model
 
         public DateTime  HiringDate { get; set; }
         public DateTime  DateOfCreation { get; set; }=DateTime.Now;
+        public int WorkForId { get; set; }
+        public Department? WorkFor { get; set; }
     }
 }
