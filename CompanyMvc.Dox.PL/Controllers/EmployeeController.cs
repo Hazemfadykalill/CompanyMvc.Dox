@@ -2,6 +2,7 @@
 using CompanyMvc.Dox.BLL.Repositories;
 using CompanyMvc.Dox.DAL.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CompanyMvc.Dox.PL.Controllers
 {
@@ -15,11 +16,19 @@ namespace CompanyMvc.Dox.PL.Controllers
             _repository = employeeRepository;
             this.departmentRepository = departmentRepository;
         }
-        [HttpGet]
-        public IActionResult Index()
+        //[HttpGet]
+        public IActionResult Index(string InputSearch)
         {
-            var AllEmps = _repository.GetAll();
+            var AllEmps=Enumerable.Empty<Employee>();   
+            if (InputSearch.IsNullOrEmpty())
+            {
 
+                AllEmps=_repository.GetAll();
+            }
+            else
+            {
+                AllEmps= _repository.GetEmpByName(InputSearch);  
+            }
             return View(AllEmps);
         }
 

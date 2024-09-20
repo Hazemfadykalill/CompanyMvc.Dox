@@ -13,7 +13,7 @@ namespace CompanyMvc.Dox.BLL.Repositories
     public class GenericRepository<T>:IGenericRepository<T> where T : BaseEntity
     {
 
-        readonly AppDbContext _Db;  //Null;
+      private protected  readonly AppDbContext _Db;  //Null;
         //دلوقتي ذلك الكلاس معتمد علي كلاس اخى فمن الممكن ذلك الكلاس يجي ليا ب فاضي فلاز احقن ذلك الكلاس 
 
         public GenericRepository(AppDbContext appDbContext)//ask clr to create object from this class before use it 
