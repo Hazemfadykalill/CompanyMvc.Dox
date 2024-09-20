@@ -1,4 +1,5 @@
 ﻿using CompanyMvc.Dox.BLL.Interfaces;
+using CompanyMvc.Dox.BLL.Repositories;
 using CompanyMvc.Dox.DAL.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,9 +8,12 @@ namespace CompanyMvc.Dox.PL.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeRepository _repository;
-        public EmployeeController(IEmployeeRepository departmentRepository)
+        private readonly IDepartmentRepository departmentRepository;
+
+        public EmployeeController(IEmployeeRepository employeeRepository,IDepartmentRepository departmentRepository)
         {
-            _repository = departmentRepository;
+            _repository = employeeRepository;
+            this.departmentRepository = departmentRepository;
         }
         [HttpGet]
         public IActionResult Index()
@@ -22,7 +26,7 @@ namespace CompanyMvc.Dox.PL.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-
+            ViewData["departments"]=departmentRepository.GetAll();
             return View();
         }
         [HttpPost]
@@ -65,7 +69,8 @@ namespace CompanyMvc.Dox.PL.Controllers
             //if (id is null) return BadRequest();
             //var department = _repository.GetById(id);
             //if (department is null) return NotFound();
-
+            var department = departmentRepository.GetAll();
+            ViewData["departments"] = department;
             return Details(id, "Update");
 
         }
@@ -77,6 +82,7 @@ namespace CompanyMvc.Dox.PL.Controllers
         {
             try
             {
+              
                 if (id != emp.Id) return BadRequest()//400
         ;
                 if (ModelState.IsValid)

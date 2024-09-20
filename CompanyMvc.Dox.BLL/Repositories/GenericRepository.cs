@@ -1,6 +1,7 @@
 ﻿using CompanyMvc.Dox.BLL.Interfaces;
 using CompanyMvc.Dox.DAL.Data.Contexts;
 using CompanyMvc.Dox.DAL.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,11 @@ namespace CompanyMvc.Dox.BLL.Repositories
         }
         public IEnumerable<T> GetAll()
         {
+            if (typeof(T)==typeof(Employee))
+            {
+
+            return (IEnumerable<T>) _Db.Employees.Include(E=>E.WorkFor).ToList();
+            }
             return _Db.Set<T>().ToList();
 
         }
