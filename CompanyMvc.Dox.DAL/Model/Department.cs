@@ -19,5 +19,6 @@ namespace CompanyMvc.Dox.DAL.Model
         [DisplayName("Date Of Creation")]
 
         public DateTime DateOfCreation{ get; set; }
+        public ICollection<Employee>? Emps { get; set; }
     }
 }

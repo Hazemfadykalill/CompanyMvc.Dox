@@ -1,6 +1,7 @@
 ﻿using CompanyMvc.Dox.BLL.Interfaces;
 using CompanyMvc.Dox.DAL.Data.Contexts;
 using CompanyMvc.Dox.DAL.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,13 @@ namespace CompanyMvc.Dox.BLL.Repositories
 
         public EmployeeRepository(AppDbContext dbContext): base(dbContext)
         {
+
             
+        }
+
+        public IEnumerable<Employee> GetEmpByName(string Name)
+        {
+           return  _Db.Employees.Where(E=>E.Name.ToLower().Contains(Name.ToLower())).Include(D=>D.WorkFor).ToList(); 
         }
         #region Before Re-Factor
         //private readonly AppDbContext dbContext;

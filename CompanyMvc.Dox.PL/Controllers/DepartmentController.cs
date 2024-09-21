@@ -15,6 +15,7 @@ namespace CompanyMvc.Dox.PL.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+
             var AllDepartments = _repository.GetAll();
 
             return View(AllDepartments);
