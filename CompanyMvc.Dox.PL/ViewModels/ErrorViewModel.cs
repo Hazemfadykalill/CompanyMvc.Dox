@@ -1,4 +1,5 @@
-namespace CompanyMvc.Dox.PL.Models
+namespace CompanyMvc.Dox.PL.ViewModels
+
 {
     public class ErrorViewModel
     {

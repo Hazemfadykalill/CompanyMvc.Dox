@@ -1,4 +1,4 @@
-using CompanyMvc.Dox.PL.Models;
+using CompanyMvc.Dox.PL.ViewModels;
 using CompanyMvc.Dox.PL.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

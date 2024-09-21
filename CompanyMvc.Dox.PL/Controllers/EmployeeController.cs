@@ -1,6 +1,7 @@
 ﻿using CompanyMvc.Dox.BLL.Interfaces;
 using CompanyMvc.Dox.BLL.Repositories;
 using CompanyMvc.Dox.DAL.Model;
+using CompanyMvc.Dox.PL.ViewModels.Employee;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
@@ -11,7 +12,7 @@ namespace CompanyMvc.Dox.PL.Controllers
         private readonly IEmployeeRepository _repository;
         private readonly IDepartmentRepository departmentRepository;
 
-        public EmployeeController(IEmployeeRepository employeeRepository,IDepartmentRepository departmentRepository)
+        public EmployeeController(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
         {
             _repository = employeeRepository;
             this.departmentRepository = departmentRepository;
@@ -19,15 +20,15 @@ namespace CompanyMvc.Dox.PL.Controllers
         //[HttpGet]
         public IActionResult Index(string InputSearch)
         {
-            var AllEmps=Enumerable.Empty<Employee>();   
+            var AllEmps = Enumerable.Empty<Employee>();
             if (InputSearch.IsNullOrEmpty())
             {
 
-                AllEmps=_repository.GetAll();
+                AllEmps = _repository.GetAll();
             }
             else
             {
-                AllEmps= _repository.GetEmpByName(InputSearch);  
+                AllEmps = _repository.GetEmpByName(InputSearch);
             }
             return View(AllEmps);
         }
@@ -35,25 +36,58 @@ namespace CompanyMvc.Dox.PL.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewData["departments"]=departmentRepository.GetAll();
+            ViewData["departments"] = departmentRepository.GetAll();
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Employee employee)
+        public IActionResult Create(EmployeeViewModel model)
         {
+
             if (ModelState.IsValid)
             {
-
-                var count = _repository.Add(employee);
-                if (count > 0)
+                try
                 {
-                    return RedirectToAction(actionName: "Index");
+
+                    //casting from empViewModel (ViewModel) To EmpModel (Employee)
+                    //Mapping
+                    //1.Manual Mapping
+
+                    Employee employee = new Employee()
+                    {
+                        Id = model.Id,
+                        Name = model.Name,
+                        Address = model.Address,
+                        Age = model.Age,
+                        Email = model.Email,
+                        Salary = model.Salary,
+                        HiringDate = model.HiringDate,
+                        IsActivated = model.IsActivated,
+                        WorkFor = model.WorkFor,
+                        WorkForId = model.WorkForId,
+                        phoneNumber = model.phoneNumber
+
+
+
+                    };
+                    var count = _repository.Add(employee);
+                  
+                    return RedirectToAction(nameof(Index));
+                 
+
+                    //2.Automatic Mapping
                 }
+                catch (Exception Ex)
+                {
+                    ModelState.AddModelError(String.Empty, Ex.Message);
+
+                }
+
+
             }
 
 
-            return View(employee);
+            return View(model);
 
         }
 
@@ -62,10 +96,30 @@ namespace CompanyMvc.Dox.PL.Controllers
         {
 
             if (id is null) return BadRequest();
-            var emps = _repository.GetById(id);
-            if (emps is null) return NotFound();
+            var model = _repository.GetById(id); 
+            if (model is null) return NotFound();
+            //casting from empViewModel (ViewModel) To EmpModel (Employee)
+            //Mapping
+            //1.Manual Mapping
 
-            return View(NameView, emps);
+            EmployeeViewModel employeeViewModel = new EmployeeViewModel()
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Address = model.Address,
+                Age = model.Age,
+                Email = model.Email,
+                Salary = model.Salary,
+                HiringDate = model.HiringDate,
+                IsActivated = model.IsActivated,
+                WorkFor = model.WorkFor,
+                WorkForId = model.WorkForId,
+                phoneNumber = model.phoneNumber
+
+
+
+            };
+            return View(NameView, employeeViewModel);
 
         }
 
@@ -86,18 +140,38 @@ namespace CompanyMvc.Dox.PL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public IActionResult Update([FromRoute] int? id, Employee emp)
+        public IActionResult Update([FromRoute] int? id, EmployeeViewModel model)
 
         {
             try
             {
-              
-                if (id != emp.Id) return BadRequest()//400
+
+                if (id !=model.Id) return BadRequest()//400
         ;
                 if (ModelState.IsValid)
                 {
+                    //casting from empViewModel (ViewModel) To EmpModel (Employee)
+                    //Mapping
+                    //1.Manual Mapping
 
-                    var count = _repository.Update(emp);
+                    Employee employee = new Employee()
+                    {
+                        Id = model.Id,
+                        Name = model.Name,
+                        Address = model.Address,
+                        Age = model.Age,
+                        Email = model.Email,
+                        Salary = model.Salary,
+                        HiringDate = model.HiringDate,
+                        IsActivated = model.IsActivated,
+                        WorkFor = model.WorkFor,
+                        WorkForId = model.WorkForId,
+                        phoneNumber = model.phoneNumber
+
+
+
+                    };
+                    var count = _repository.Update(employee);
                     if (count > 0)
                     {
                         return RedirectToAction(actionName: "Index");
@@ -111,7 +185,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             }
 
 
-            return View(emp );
+            return View(model);
 
         }
 
@@ -131,17 +205,37 @@ namespace CompanyMvc.Dox.PL.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete([FromRoute] int? id, Employee emp)
+        public IActionResult Delete([FromRoute] int? id, EmployeeViewModel model)
 
         {
             try
             {
-                if (id != emp.Id) return BadRequest()//400
+                if (id != model.Id) return BadRequest()//400
         ;
                 if (ModelState.IsValid)
                 {
+                    //casting from empViewModel (ViewModel) To EmpModel (Employee)
+                    //Mapping
+                    //1.Manual Mapping
 
-                    var count = _repository.Remove(emp);
+                    Employee employee = new Employee()
+                    {
+                        Id = model.Id,
+                        Name = model.Name,
+                        Address = model.Address,
+                        Age = model.Age,
+                        Email = model.Email,
+                        Salary = model.Salary,
+                        HiringDate = model.HiringDate,
+                        IsActivated = model.IsActivated,
+                        WorkFor = model.WorkFor,
+                        WorkForId = model.WorkForId,
+                        phoneNumber = model.phoneNumber
+
+
+
+                    };
+                    var count = _repository.Remove(employee);
                     if (count > 0)
                     {
                         return RedirectToAction(actionName: "Index");
@@ -155,7 +249,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             }
 
 
-            return View(emp);
+            return View(model);
 
         }
 

@@ -10,19 +10,12 @@ namespace CompanyMvc.Dox.DAL.Model
     public  class Employee:BaseEntity
     {
        
-        [Required(ErrorMessage ="Please Enter Your Name!!")]
         public string Name { get; set; }
 
-        [Range(10,80,ErrorMessage ="Enter Your Age Between 10 To 80")]
         public int? Age { get; set; }
-        [Required(ErrorMessage = "Please Enter Your Salary!!")]
-        [DataType(DataType.Currency)]
         public double  Salary { get; set; }
-        [RegularExpression(pattern: @"[1-9]{1,3}-[a-zA-Z]{5,10}-[a-zA-Z]{4,10}-[a-zA-Z]{5,10}$")]
         public string Address { get; set; }
-        [EmailAddress]
         public string Email { get; set; }
-        [Phone]
         public string phoneNumber { get; set; }
         public Boolean IsActivated { get; set; }
         public Boolean IsDeleted { get; set; }
