@@ -1,21 +1,32 @@
-﻿using CompanyMvc.Dox.BLL.Interfaces;
+﻿using AutoMapper;
+using CompanyMvc.Dox.BLL.Interfaces;
 using CompanyMvc.Dox.BLL.Repositories;
 using CompanyMvc.Dox.DAL.Model;
 using CompanyMvc.Dox.PL.ViewModels.Employee;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using NuGet.Configuration;
 
 namespace CompanyMvc.Dox.PL.Controllers
 {
     public class EmployeeController : Controller
     {
-        private readonly IEmployeeRepository _repository;
-        private readonly IDepartmentRepository departmentRepository;
+        //private readonly IEmployeeRepository _repository;
+        //private readonly IDepartmentRepository departmentRepository;
+        private readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public EmployeeController(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
+        public EmployeeController(
+            //IEmployeeRepository employeeRepository,
+            //IDepartmentRepository departmentRepository,
+            IUnitOfWork unitOfWork,
+            IMapper mapper
+            )
         {
-            _repository = employeeRepository;
-            this.departmentRepository = departmentRepository;
+            //_repository = employeeRepository;
+            //this.departmentRepository = departmentRepository;
+            this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
         //[HttpGet]
         public IActionResult Index(string InputSearch)
@@ -24,19 +35,21 @@ namespace CompanyMvc.Dox.PL.Controllers
             if (InputSearch.IsNullOrEmpty())
             {
 
-                AllEmps = _repository.GetAll();
+                AllEmps = unitOfWork.EmployeeRepository.GetAll();
             }
             else
             {
-                AllEmps = _repository.GetEmpByName(InputSearch);
+                AllEmps = unitOfWork.EmployeeRepository.GetEmpByName(InputSearch);
             }
-            return View(AllEmps);
+
+            var Result=mapper.Map<IEnumerable<EmployeeViewModel>>(AllEmps);
+            return View(Result);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            ViewData["departments"] = departmentRepository.GetAll();
+            ViewData["departments"] = unitOfWork.DepartmentRepository.GetAll();
             return View();
         }
         [HttpPost]
@@ -53,29 +66,31 @@ namespace CompanyMvc.Dox.PL.Controllers
                     //Mapping
                     //1.Manual Mapping
 
-                    Employee employee = new Employee()
-                    {
-                        Id = model.Id,
-                        Name = model.Name,
-                        Address = model.Address,
-                        Age = model.Age,
-                        Email = model.Email,
-                        Salary = model.Salary,
-                        HiringDate = model.HiringDate,
-                        IsActivated = model.IsActivated,
-                        WorkFor = model.WorkFor,
-                        WorkForId = model.WorkForId,
-                        phoneNumber = model.phoneNumber
+                    //Employee employee = new Employee()
+                    //{
+                    //    Id = model.Id,
+                    //    Name = model.Name,
+                    //    Address = model.Address,
+                    //    Age = model.Age,
+                    //    Email = model.Email,
+                    //    Salary = model.Salary,
+                    //    HiringDate = model.HiringDate,
+                    //    IsActivated = model.IsActivated,
+                    //    WorkFor = model.WorkFor,
+                    //    WorkForId = model.WorkForId,
+                    //    phoneNumber = model.phoneNumber
 
 
 
-                    };
-                    var count = _repository.Add(employee);
+                    //};
+                    //2.Automatic Mapping
+                    var employee=mapper.Map<Employee>(model);
+                    var count = unitOfWork.EmployeeRepository.Add(employee);
                   
                     return RedirectToAction(nameof(Index));
                  
 
-                    //2.Automatic Mapping
+                   
                 }
                 catch (Exception Ex)
                 {
@@ -96,29 +111,32 @@ namespace CompanyMvc.Dox.PL.Controllers
         {
 
             if (id is null) return BadRequest();
-            var model = _repository.GetById(id); 
+            var model = unitOfWork.EmployeeRepository.GetById(id); 
             if (model is null) return NotFound();
             //casting from empViewModel (ViewModel) To EmpModel (Employee)
             //Mapping
             //1.Manual Mapping
 
-            EmployeeViewModel employeeViewModel = new EmployeeViewModel()
-            {
-                Id = model.Id,
-                Name = model.Name,
-                Address = model.Address,
-                Age = model.Age,
-                Email = model.Email,
-                Salary = model.Salary,
-                HiringDate = model.HiringDate,
-                IsActivated = model.IsActivated,
-                WorkFor = model.WorkFor,
-                WorkForId = model.WorkForId,
-                phoneNumber = model.phoneNumber
+            //EmployeeViewModel employeeViewModel = new EmployeeViewModel()
+            //{
+            //    Id = model.Id,
+            //    Name = model.Name,
+            //    Address = model.Address,
+            //    Age = model.Age,
+            //    Email = model.Email,
+            //    Salary = model.Salary,
+            //    HiringDate = model.HiringDate,
+            //    IsActivated = model.IsActivated,
+            //    WorkFor = model.WorkFor,
+            //    WorkForId = model.WorkForId,
+            //    phoneNumber = model.phoneNumber
 
 
 
-            };
+            //};
+
+            //2.auto mapping
+           var employeeViewModel=mapper.Map<EmployeeViewModel>(model);
             return View(NameView, employeeViewModel);
 
         }
@@ -132,7 +150,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             //if (id is null) return BadRequest();
             //var department = _repository.GetById(id);
             //if (department is null) return NotFound();
-            var department = departmentRepository.GetAll();
+            var department = unitOfWork.DepartmentRepository.GetAll();
             ViewData["departments"] = department;
             return Details(id, "Update");
 
@@ -154,24 +172,27 @@ namespace CompanyMvc.Dox.PL.Controllers
                     //Mapping
                     //1.Manual Mapping
 
-                    Employee employee = new Employee()
-                    {
-                        Id = model.Id,
-                        Name = model.Name,
-                        Address = model.Address,
-                        Age = model.Age,
-                        Email = model.Email,
-                        Salary = model.Salary,
-                        HiringDate = model.HiringDate,
-                        IsActivated = model.IsActivated,
-                        WorkFor = model.WorkFor,
-                        WorkForId = model.WorkForId,
-                        phoneNumber = model.phoneNumber
+                    //Employee employee = new Employee()
+                    //{
+                    //    Id = model.Id,
+                    //    Name = model.Name,
+                    //    Address = model.Address,
+                    //    Age = model.Age,
+                    //    Email = model.Email,
+                    //    Salary = model.Salary,
+                    //    HiringDate = model.HiringDate,
+                    //    IsActivated = model.IsActivated,
+                    //    WorkFor = model.WorkFor,
+                    //    WorkForId = model.WorkForId,
+                    //    phoneNumber = model.phoneNumber
 
 
 
-                    };
-                    var count = _repository.Update(employee);
+                    //};
+
+                    //2. auto mapping
+                    var employee=mapper.Map<Employee>(model);
+                    var count = unitOfWork.EmployeeRepository.Update(employee);
                     if (count > 0)
                     {
                         return RedirectToAction(actionName: "Index");
@@ -218,24 +239,28 @@ namespace CompanyMvc.Dox.PL.Controllers
                     //Mapping
                     //1.Manual Mapping
 
-                    Employee employee = new Employee()
-                    {
-                        Id = model.Id,
-                        Name = model.Name,
-                        Address = model.Address,
-                        Age = model.Age,
-                        Email = model.Email,
-                        Salary = model.Salary,
-                        HiringDate = model.HiringDate,
-                        IsActivated = model.IsActivated,
-                        WorkFor = model.WorkFor,
-                        WorkForId = model.WorkForId,
-                        phoneNumber = model.phoneNumber
+                    //Employee employee = new Employee()
+                    //{
+                    //    Id = model.Id,
+                    //    Name = model.Name,
+                    //    Address = model.Address,
+                    //    Age = model.Age,
+                    //    Email = model.Email,
+                    //    Salary = model.Salary,
+                    //    HiringDate = model.HiringDate,
+                    //    IsActivated = model.IsActivated,
+                    //    WorkFor = model.WorkFor,
+                    //    WorkForId = model.WorkForId,
+                    //    phoneNumber = model.phoneNumber
 
 
 
-                    };
-                    var count = _repository.Remove(employee);
+                    //};
+
+                    //2.auto mapping
+                    var employee = mapper.Map<Employee>(model);
+
+                    var count = unitOfWork.EmployeeRepository.Remove(employee);
                     if (count > 0)
                     {
                         return RedirectToAction(actionName: "Index");

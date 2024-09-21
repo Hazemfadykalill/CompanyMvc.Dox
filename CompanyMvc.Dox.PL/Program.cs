@@ -1,6 +1,8 @@
 using CompanyMvc.Dox.BLL.Interfaces;
 using CompanyMvc.Dox.BLL.Repositories;
+using CompanyMvc.Dox.BLL.Units;
 using CompanyMvc.Dox.DAL.Data.Contexts;
+using CompanyMvc.Dox.PL.Mapping.Employees;
 using CompanyMvc.Dox.PL.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,11 +24,13 @@ namespace CompanyMvc.Dox.PL
            // builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConections"]));//add dependency Injection
            builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();//add dependency Injection
            builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();//add dependency Injection
+           builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();//add dependency Injection
 
 
             builder.Services.AddScoped<IScopedService,ScopedService>();         
             builder.Services.AddTransient<ITransientService,TransientService>();
             builder.Services.AddSingleton<ISingleTonService,SingleTonService>();
+            builder.Services.AddAutoMapper(typeof(EmployeeProfile));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
