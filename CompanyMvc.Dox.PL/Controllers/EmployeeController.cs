@@ -170,28 +170,37 @@ namespace CompanyMvc.Dox.PL.Controllers
         ;
                 if (ModelState.IsValid)
                 {
-                    //casting from empViewModel (ViewModel) To EmpModel (Employee)
-                    //Mapping
-                    //1.Manual Mapping
+                    ///casting from empViewModel (ViewModel) To EmpModel (Employee)
+                    ///Mapping
+                    ///1.Manual Mapping
 
-                    //Employee employee = new Employee()
-                    //{
-                    //    Id = model.Id,
-                    //    Name = model.Name,
-                    //    Address = model.Address,
-                    //    Age = model.Age,
-                    //    Email = model.Email,
-                    //    Salary = model.Salary,
-                    //    HiringDate = model.HiringDate,
-                    //    IsActivated = model.IsActivated,
-                    //    WorkFor = model.WorkFor,
-                    //    WorkForId = model.WorkForId,
-                    //    phoneNumber = model.phoneNumber
+                    ///Employee employee = new Employee()
+                    ///{
+                    ///    Id = model.Id,
+                    ///    Name = model.Name,
+                    ///    Address = model.Address,
+                    ///    Age = model.Age,
+                    ///    Email = model.Email,
+                    ///    Salary = model.Salary,
+                    ///    HiringDate = model.HiringDate,
+                    ///    IsActivated = model.IsActivated,
+                    ///    WorkFor = model.WorkFor,
+                    ///    WorkForId = model.WorkForId,
+                    ///    phoneNumber = model.phoneNumber
+                    ///};
 
+                    //Images Update
+                    if (model.ImageName is not null)
+                    {
 
+                        DocumentSettings.DeletingFile(model.ImageName,"Images");
+                    }
+                    if (model.Image is not null)
+                    {
 
-                    //};
-
+                        model.ImageName = DocumentSettings.UploadingFile(model.Image, "Images");
+                    }
+                    
                     //2. auto mapping
                     var employee=mapper.Map<Employee>(model);
                     var count = unitOfWork.EmployeeRepository.Update(employee);
@@ -237,6 +246,7 @@ namespace CompanyMvc.Dox.PL.Controllers
         ;
                 if (ModelState.IsValid)
                 {
+                 
                     //casting from empViewModel (ViewModel) To EmpModel (Employee)
                     //Mapping
                     //1.Manual Mapping
@@ -265,6 +275,10 @@ namespace CompanyMvc.Dox.PL.Controllers
                     var count = unitOfWork.EmployeeRepository.Remove(employee);
                     if (count > 0)
                     {
+                        if (model.ImageName is not null)
+                        {
+                            DocumentSettings.DeletingFile(model.ImageName, "Images");
+                        }
                         return RedirectToAction(actionName: "Index");
                     }
                 }

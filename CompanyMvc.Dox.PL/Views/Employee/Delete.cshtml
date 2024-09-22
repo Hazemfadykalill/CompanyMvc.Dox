@@ -10,6 +10,7 @@
 <form asp-action="Delete">
 
     <partial name="PartialView/PartialViewToDetailsAndDelete" model="Model"></partial>
+    <input hidden asp-for="ImageName" />
 
     <input type="submit" asp-controller="Employee" value="Delete" asp-action="Delete" class="btn btn-danger">
     <a asp-controller="Employee" asp-action="Index" class="btn btn-light">Back To List</a>
