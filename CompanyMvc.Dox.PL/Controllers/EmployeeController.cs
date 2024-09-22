@@ -2,6 +2,7 @@
 using CompanyMvc.Dox.BLL.Interfaces;
 using CompanyMvc.Dox.BLL.Repositories;
 using CompanyMvc.Dox.DAL.Model;
+using CompanyMvc.Dox.PL.HelperLogic;
 using CompanyMvc.Dox.PL.ViewModels.Employee;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -61,6 +62,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             {
                 try
                 {
+                    model.ImageName = DocumentSettings.UploadingFile(model.Image,"Images");
 
                     //casting from empViewModel (ViewModel) To EmpModel (Employee)
                     //Mapping
