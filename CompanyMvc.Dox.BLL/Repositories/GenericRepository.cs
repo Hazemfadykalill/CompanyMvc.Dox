@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,24 +22,24 @@ namespace CompanyMvc.Dox.BLL.Repositories
             _Db = appDbContext;
 
         }
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
             if (typeof(T)==typeof(Employee))
             {
 
-            return (IEnumerable<T>) _Db.Employees.Include(E=>E.WorkFor).ToList();
+            return  (IEnumerable<T>) await _Db.Employees.Include(E=>E.WorkFor).ToListAsync();
             }
-            return _Db.Set<T>().ToList();
+            return await _Db.Set<T>().ToListAsync();
 
         }
 
-        public T GetById(int? id)
+        public async Task<T?> GetByIdAsync(int? id)
         {
-            return _Db.Set<T>().Find(id);
+            return await _Db.Set<T>().FindAsync(id);
         }
-        public int Add(T entity)
+        public async Task<int> AddAsync(T entity)
         {
-            _Db.Set<T>().Add(entity);
+           await _Db.Set<T>().AddAsync(entity);
             return _Db.SaveChanges();
         }
 
@@ -47,7 +48,7 @@ namespace CompanyMvc.Dox.BLL.Repositories
         public int Update(T entity)
         {
             _Db.Set<T>().Update(entity);
-            return _Db.SaveChanges();
+            return  _Db.SaveChanges();
         }
         public int Remove(T entity)
         {

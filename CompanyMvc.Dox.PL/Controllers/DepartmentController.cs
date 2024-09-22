@@ -13,10 +13,10 @@ namespace CompanyMvc.Dox.PL.Controllers
             _repository = departmentRepository;
         }
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
-            var AllDepartments = _repository.GetAll();
+            var AllDepartments = await _repository.GetAllAsync();
 
             return View(AllDepartments);
         }
@@ -29,12 +29,12 @@ namespace CompanyMvc.Dox.PL.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Department department)
+        public async Task<IActionResult> Create(Department department)
         {
             if (ModelState.IsValid)
             {
 
-                var count = _repository.Add(department);
+                var count = await _repository.AddAsync(department);
                 if (count > 0)
                 {
                     return RedirectToAction(actionName: "Index");
@@ -46,12 +46,12 @@ namespace CompanyMvc.Dox.PL.Controllers
 
         }
 
-        public IActionResult Details(int? id,string NameView= "Details")
+        public async Task<IActionResult> Details(int? id,string NameView= "Details")
 
         {
 
             if (id is null) return BadRequest();
-            var department = _repository.GetById(id);
+            var department =await _repository.GetByIdAsync(id);
             if (department is null) return NotFound();
 
             return View(NameView,department);
@@ -60,7 +60,7 @@ namespace CompanyMvc.Dox.PL.Controllers
 
         //Update
 
-        public IActionResult Update(int? id)
+        public async Task<IActionResult> Update(int? id)
 
         {
 
@@ -68,7 +68,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             //var department = _repository.GetById(id);
             //if (department is null) return NotFound();
 
-            return Details(id,"Update");
+            return await Details(id,"Update");
 
         }
         [HttpPost]
@@ -105,7 +105,7 @@ namespace CompanyMvc.Dox.PL.Controllers
 
         //Delete
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
 
         {
 
@@ -113,7 +113,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             //var department = _repository.GetById(id);
             //if (department is null) return NotFound();
 
-            return Details(id,"Delete");
+            return await Details(id,"Delete");
 
         }
         [HttpPost]

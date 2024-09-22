@@ -10,7 +10,7 @@ namespace CompanyMvc.Dox.BLL.Interfaces
 {
     public interface IEmployeeRepository:IGenericRepository<Employee>
     {
-     IEnumerable<Employee> GetEmpByName(string empName); 
+     Task<IEnumerable<Employee>> GetEmpByNameAsync(string empName); 
 
 
         //IEnumerable<Employee> GetAll();

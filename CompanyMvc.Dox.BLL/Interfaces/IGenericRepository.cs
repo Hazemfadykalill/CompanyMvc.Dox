@@ -9,13 +9,13 @@ namespace CompanyMvc.Dox.BLL.Interfaces
 {
     public  interface IGenericRepository<T>
     {
-        IEnumerable<T> GetAll();
+       Task<IEnumerable<T>>  GetAllAsync();
 
         //Get Employee By Id
-        T GetById(int? id);
+        Task<T?> GetByIdAsync(int? id);
 
         //Add Employee
-        int Add(T entity);
+        Task<int> AddAsync(T entity);
         //Update Employee
 
         int Update(T entity);

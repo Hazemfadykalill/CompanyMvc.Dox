@@ -30,17 +30,17 @@ namespace CompanyMvc.Dox.PL.Controllers
             this.mapper = mapper;
         }
         //[HttpGet]
-        public IActionResult Index(string InputSearch)
+        public async Task<IActionResult> Index(string InputSearch)
         {
             var AllEmps = Enumerable.Empty<Employee>();
             if (InputSearch.IsNullOrEmpty())
             {
 
-                AllEmps = unitOfWork.EmployeeRepository.GetAll();
+                AllEmps =await unitOfWork.EmployeeRepository.GetAllAsync();
             }
             else
             {
-                AllEmps = unitOfWork.EmployeeRepository.GetEmpByName(InputSearch);
+                AllEmps = await  unitOfWork.EmployeeRepository.GetEmpByNameAsync(InputSearch);
             }
 
             var Result=mapper.Map<IEnumerable<EmployeeViewModel>>(AllEmps);
@@ -48,14 +48,14 @@ namespace CompanyMvc.Dox.PL.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["departments"] = unitOfWork.DepartmentRepository.GetAll();
+            ViewData["departments"] = await unitOfWork.DepartmentRepository.GetAllAsync();
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(EmployeeViewModel model)
+        public async Task<IActionResult> Create(EmployeeViewModel model)
         {
 
             if (ModelState.IsValid)
@@ -87,7 +87,7 @@ namespace CompanyMvc.Dox.PL.Controllers
                     //};
                     //2.Automatic Mapping
                     var employee=mapper.Map<Employee>(model);
-                    var count = unitOfWork.EmployeeRepository.Add(employee);
+                    var count = await  unitOfWork.EmployeeRepository.AddAsync(employee);
                   
                     return RedirectToAction(nameof(Index));
                  
@@ -108,12 +108,12 @@ namespace CompanyMvc.Dox.PL.Controllers
 
         }
 
-        public IActionResult Details(int? id, string NameView = "Details")
+        public async Task<IActionResult> Details(int? id, string NameView = "Details")
 
         {
 
             if (id is null) return BadRequest();
-            var model = unitOfWork.EmployeeRepository.GetById(id); 
+            var model = await  unitOfWork.EmployeeRepository.GetByIdAsync(id); 
             if (model is null) return NotFound();
             //casting from empViewModel (ViewModel) To EmpModel (Employee)
             //Mapping
@@ -145,16 +145,16 @@ namespace CompanyMvc.Dox.PL.Controllers
 
         //Update
 
-        public IActionResult Update(int? id)
+        public async Task<IActionResult> Update(int? id)
 
         {
 
             //if (id is null) return BadRequest();
             //var department = _repository.GetById(id);
             //if (department is null) return NotFound();
-            var department = unitOfWork.DepartmentRepository.GetAll();
+            var department =await unitOfWork.DepartmentRepository.GetAllAsync();
             ViewData["departments"] = department;
-            return Details(id, "Update");
+            return await Details(id, "Update");
 
         }
         [HttpPost]
@@ -224,7 +224,7 @@ namespace CompanyMvc.Dox.PL.Controllers
 
         //Delete
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
 
         {
 
@@ -232,7 +232,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             //var department = _repository.GetById(id);
             //if (department is null) return NotFound();
 
-            return Details(id, "Delete");
+            return await  Details(id, "Delete");
 
         }
         [HttpPost]
