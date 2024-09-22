@@ -27,6 +27,6 @@ namespace CompanyMvc.Dox.PL.ViewModels.Employee
         public int WorkForId { get; set; }
         public Department? WorkFor { get; set; }
         public string? ImageName { get; set; }
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
     }
 }

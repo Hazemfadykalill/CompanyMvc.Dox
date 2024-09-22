@@ -7,7 +7,7 @@
 <div class="w-100 m-5 text-center bg-dark shadow p-5 rounded-3">
     <h1 class="text-white ">  You Can Delete This!! </h1>
 </div>
-<form asp-action="Delete">
+<form asp-action="Delete" enctype="multipart/form-data">
 
     <partial name="PartialView/PartialViewToDetailsAndDelete" model="Model"></partial>
     <input hidden asp-for="ImageName" />
