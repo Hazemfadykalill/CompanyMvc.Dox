@@ -134,7 +134,29 @@ namespace CompanyMvc.Dox.PL.Controllers
 
         }
 
+        //forget password
+        public IActionResult ForgetPassword()
+        {
+			return View();
+
+        }
+
+		public async Task<IActionResult> SendResetPasswordURL(ForgetPasswordViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var User= await userManger.FindByEmailAsync(model.Email);
+				if (User is not null)
+				{
+					//Send Email 
+				}
+				ModelState.AddModelError(string.Empty, "Invalid Operation Please Try Again!!");
+
+			}
+			return View(model);
+
+		}
 
 
-    }
+	}
 }
