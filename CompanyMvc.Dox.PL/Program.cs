@@ -1,4 +1,4 @@
-using CompanyMvc.Dox.BLL.Interfaces;
+  using CompanyMvc.Dox.BLL.Interfaces;
 using CompanyMvc.Dox.BLL.Repositories;
 using CompanyMvc.Dox.BLL.Units;
 using CompanyMvc.Dox.DAL.Data.Contexts;
@@ -34,6 +34,10 @@ namespace CompanyMvc.Dox.PL
             builder.Services.AddSingleton<ISingleTonService,SingleTonService>();
             builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 			builder.Services.AddAutoMapper(typeof(EmployeeProfile));
+            builder.Services.ConfigureApplicationCookie(config =>
+            config.LoginPath = "/Account/Login");
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -46,7 +50,8 @@ namespace CompanyMvc.Dox.PL
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseRouting();
 
             app.UseAuthorization();

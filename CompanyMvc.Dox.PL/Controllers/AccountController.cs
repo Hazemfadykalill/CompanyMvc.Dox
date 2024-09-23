@@ -8,10 +8,12 @@ namespace CompanyMvc.Dox.PL.Controllers
 	public class AccountController : Controller
 	{
 		private readonly UserManager<ApplicationUser> userManger;
+		private readonly SignInManager<ApplicationUser> signInManager;
 
-		public AccountController(UserManager<ApplicationUser> userManger)
+		public AccountController(UserManager<ApplicationUser> userManger,SignInManager<ApplicationUser> signInManager)
 		{
 			this.userManger = userManger;
+			this.signInManager = signInManager;
 		}
 		//SignUp
 		[HttpGet]
@@ -98,7 +100,13 @@ namespace CompanyMvc.Dox.PL.Controllers
 						if (Result)
 						{
 							//login
+							var result=await signInManager.PasswordSignInAsync(User,model.Password,model.RememberMe,false);
+							if (result.Succeeded)
+							{
+
 							return RedirectToAction("Index", "Home");
+							}
+
 
 						}
 
