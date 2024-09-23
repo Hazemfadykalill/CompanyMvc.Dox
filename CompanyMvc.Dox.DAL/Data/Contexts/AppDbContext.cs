@@ -1,4 +1,6 @@
 ﻿using CompanyMvc.Dox.DAL.Model;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,12 +11,13 @@ using System.Threading.Tasks;
 
 namespace CompanyMvc.Dox.DAL.Data.Contexts
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext:IdentityDbContext<ApplicationUser>
     {
 
         //To Connect Database
         public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
         {
+
                 
         }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -29,6 +32,7 @@ namespace CompanyMvc.Dox.DAL.Data.Contexts
 
             //Or [To All Class In The Same Time]
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
 
 
         }
@@ -36,6 +40,8 @@ namespace CompanyMvc.Dox.DAL.Data.Contexts
       
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        //public DbSet<IdentityUser> Users { get; set; }
+        //public DbSet<IdentityRole> Roles { get; set; }
 
     }
 }

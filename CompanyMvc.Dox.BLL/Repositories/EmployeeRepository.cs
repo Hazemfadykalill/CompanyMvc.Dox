@@ -21,9 +21,9 @@ namespace CompanyMvc.Dox.BLL.Repositories
             
         }
 
-        public IEnumerable<Employee> GetEmpByName(string Name)
+        public async Task<IEnumerable<Employee>> GetEmpByNameAsync(string Name)
         {
-           return  _Db.Employees.Where(E=>E.Name.ToLower().Contains(Name.ToLower())).Include(D=>D.WorkFor).ToList(); 
+           return await _Db.Employees.Where(E=>E.Name.ToLower().Contains(Name.ToLower())).Include(D=>D.WorkFor).ToListAsync(); 
         }
         #region Before Re-Factor
         //private readonly AppDbContext dbContext;

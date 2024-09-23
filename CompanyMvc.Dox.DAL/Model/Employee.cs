@@ -15,6 +15,7 @@ namespace CompanyMvc.Dox.DAL.Model
         public int? Age { get; set; }
         public double  Salary { get; set; }
         public string Address { get; set; }
+        public string? ImageName { get; set; }
         public string Email { get; set; }
         public string phoneNumber { get; set; }
         public Boolean IsActivated { get; set; }
