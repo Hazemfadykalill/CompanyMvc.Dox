@@ -126,6 +126,15 @@ namespace CompanyMvc.Dox.PL.Controllers
 		}
 
 
+        //Log Out
+        public async Task<IActionResult> LogOut()
+        {
+            await signInManager.SignOutAsync();	
+			return RedirectToAction("Login");
 
-	}
+        }
+
+
+
+    }
 }
