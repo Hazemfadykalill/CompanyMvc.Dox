@@ -2,8 +2,10 @@ using CompanyMvc.Dox.BLL.Interfaces;
 using CompanyMvc.Dox.BLL.Repositories;
 using CompanyMvc.Dox.BLL.Units;
 using CompanyMvc.Dox.DAL.Data.Contexts;
+using CompanyMvc.Dox.DAL.Model;
 using CompanyMvc.Dox.PL.Mapping.Employees;
 using CompanyMvc.Dox.PL.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CompanyMvc.Dox.PL
@@ -30,7 +32,8 @@ namespace CompanyMvc.Dox.PL
             builder.Services.AddScoped<IScopedService,ScopedService>();         
             builder.Services.AddTransient<ITransientService,TransientService>();
             builder.Services.AddSingleton<ISingleTonService,SingleTonService>();
-            builder.Services.AddAutoMapper(typeof(EmployeeProfile));
+            builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+			builder.Services.AddAutoMapper(typeof(EmployeeProfile));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
