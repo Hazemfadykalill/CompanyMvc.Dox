@@ -176,11 +176,41 @@ namespace CompanyMvc.Dox.PL.Controllers
 			return View(model);
 
 		}
-
+		//view that show during sending mail  
 		public IActionResult CheckYourInBox()
 		{
 			return View();	
 		}
+		[HttpGet] 
+		public IActionResult ResetPassword(string Email,string  Token)
+		{
+			TempData["Email"]=Email;
+			TempData["Token"]=Token	;
 
+			return View();
+		}
+		[HttpPost]
+		public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+		{
+
+			if (ModelState.IsValid)
+			{
+			var Email = TempData["Email"] as string;
+			var Token = TempData["Token"]as string;
+				var user = await userManger.FindByEmailAsync(Email);
+				if (user is not null )
+				{
+
+				var result=await	userManger.ResetPasswordAsync(user, Token, model.Password);
+					if (result.Succeeded)
+					{
+						return RedirectToAction(nameof(Login));
+					}
+				}
+			}
+			ModelState.AddModelError(string.Empty, "Invalid Please Try Again!!");
+
+			return View();
+		}
 	}
 }
