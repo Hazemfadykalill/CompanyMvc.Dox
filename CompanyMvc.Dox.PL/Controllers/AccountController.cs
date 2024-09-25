@@ -1,4 +1,5 @@
 ﻿using CompanyMvc.Dox.DAL.Model;
+using CompanyMvc.Dox.PL.HelperLogic;
 using CompanyMvc.Dox.PL.ViewModels.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -133,7 +134,7 @@ namespace CompanyMvc.Dox.PL.Controllers
 			return RedirectToAction("Login");
 
         }
-
+		 
         //forget password
         public IActionResult ForgetPassword()
         {
@@ -150,7 +151,7 @@ namespace CompanyMvc.Dox.PL.Controllers
 				if (User is not null)
 				{
 					//this email is found 
-					//Send Email 
+					
 					//1. Generate Token That You Send With URL
 					var Token=await userManger.GeneratePasswordResetTokenAsync(User);
 
@@ -162,10 +163,12 @@ namespace CompanyMvc.Dox.PL.Controllers
 					{
 						To = model.Email,
 						Body = "",
-						Subject=URL
+						Subject = URL!
 
 					};
-
+					//Send Email 
+					EmailSettings.SendEmail(emailSending);
+					return RedirectToAction(nameof(CheckYourInBox));
 				}
 				ModelState.AddModelError(string.Empty, "Invalid Please Try Again!!");
 
@@ -174,6 +177,10 @@ namespace CompanyMvc.Dox.PL.Controllers
 
 		}
 
+		public IActionResult CheckYourInBox()
+		{
+			return View();	
+		}
 
 	}
 }
