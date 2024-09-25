@@ -32,7 +32,12 @@ namespace CompanyMvc.Dox.PL
             builder.Services.AddScoped<IScopedService,ScopedService>();         
             builder.Services.AddTransient<ITransientService,TransientService>();
             builder.Services.AddSingleton<ISingleTonService,SingleTonService>();
-            builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
+
+            builder.Services
+                .AddIdentity<ApplicationUser,IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
 			builder.Services.AddAutoMapper(typeof(EmployeeProfile));
             builder.Services.ConfigureApplicationCookie(config =>
             config.LoginPath = "/Account/Login");
