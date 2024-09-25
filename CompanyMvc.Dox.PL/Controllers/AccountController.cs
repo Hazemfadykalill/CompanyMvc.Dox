@@ -140,17 +140,34 @@ namespace CompanyMvc.Dox.PL.Controllers
 			return View();
 
         }
-
+		[HttpPost]
 		public async Task<IActionResult> SendResetPasswordURL(ForgetPasswordViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
+				//this email found or no 
 				var User= await userManger.FindByEmailAsync(model.Email);
 				if (User is not null)
 				{
+					//this email is found 
 					//Send Email 
+					//1. Generate Token That You Send With URL
+					var Token=await userManger.GeneratePasswordResetTokenAsync(User);
+
+					//2.Create ResetPassord URL
+					var URL=Url.Action("ResetPassword","Account",new { Email = model.Email,Token=Token },Request.Scheme);
+
+					//3.Create Email That Sending 
+					var emailSending = new EmailSending()
+					{
+						To = model.Email,
+						Body = "",
+						Subject=URL
+
+					};
+
 				}
-				ModelState.AddModelError(string.Empty, "Invalid Operation Please Try Again!!");
+				ModelState.AddModelError(string.Empty, "Invalid Please Try Again!!");
 
 			}
 			return View(model);
