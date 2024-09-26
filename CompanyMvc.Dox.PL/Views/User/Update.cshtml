@@ -6,27 +6,29 @@
 
 
 
-<div class="w-100 m-5 text-center bg-dark shadow p-5 rounded-3">
-    <h1 class="text-white ">Update User @Model.FirstName @Model.LastName  </h1>
+<div class="UpdateEmployee After shadow px-5 py-3 rounded-2 my-2 ">
+    <div class="w-100 mb-3 text-center">
+        <h1 class=" ">Update User @Model.FirstName @Model.LastName  </h1>
+    </div>
+
+
+
+    <form asp-action="Update">
+        <!-- <div asp-validation-summary="All" class="w-100 h-25 justify-content-center p-5 m-5 rounded-3 shadow bg-danger"></div>-->
+        
+
+        <partial name="UserPartialView/PartialViewToCreateAndUpdate"></partial>
+
+        <input type="submit" value="Update" class="btn btn-primary" />
+        <a asp-controller="User" asp-action="Index" class="btn btn-light">Back To List</a>
+    </form>
+
+    @section ClientSideValidationByHazem {
+
+
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
+    }
 </div>
-
-
-
-<form asp-action="Update" >
-
-    <div asp-validation-summary="All" class="w-100 h-25 justify-content-center p-5 m-5 rounded-3 shadow bg-danger"></div>
-
-    <partial name="UserPartialView/PartialViewToCreateAndUpdate"></partial>
-   
-    <input type="submit" value="Update" class="btn btn-primary" />
-    <a asp-controller="User" asp-action="Index" class="btn btn-light">Back To List</a>
-</form>
-
-@section ClientSideValidationByHazem {
-
-
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
-
-}
