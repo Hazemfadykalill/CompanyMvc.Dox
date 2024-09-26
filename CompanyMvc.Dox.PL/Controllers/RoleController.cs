@@ -11,10 +11,12 @@ namespace CompanyMvc.Dox.PL.Controllers
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManger;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public RoleController(RoleManager<IdentityRole> roleManger)
+        public RoleController(RoleManager<IdentityRole> roleManger,UserManager<ApplicationUser> userManager)
         {
             this.roleManger = roleManger;
+            this.userManager = userManager;
         }
 
         // Operations On New User [ Get GetAll Details Delete Update  create]
@@ -197,6 +199,37 @@ namespace CompanyMvc.Dox.PL.Controllers
 
             return View(model);
 
+        }
+
+
+        public async Task<IActionResult> AddOrRemoveUser(string roleId)
+        {
+            var role=await roleManger.FindByIdAsync(roleId);
+            if (role == null) return NotFound();
+            //get all users
+             var UsersInRoles=new List<UsersInRoleViewModel>();
+            var Users =await userManager.Users.ToListAsync();
+            foreach (var user in Users)
+            {
+                var UserInRole = new UsersInRoleViewModel()
+                {
+                    UserId = user.Id,
+
+                    UserName = user.UserName
+                };
+                if(await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    UserInRole.IsSelected = true;
+                }
+                else
+                {
+                    UserInRole.IsSelected = false;
+
+
+                }
+                UsersInRoles.Add(UserInRole); 
+            }
+            return View(UsersInRoles);
         }
     }
 }
