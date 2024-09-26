@@ -5,61 +5,61 @@
 }
 
 
-<div class="w-100 m-5  bg-dark text-center shadow p-3 rounded-3">
-    <h1 class="text-white ">All Roles </h1>
-</div>
+<div class="IndexRoles After">
+    <div class="w-100  text-center mb-3">
+        <h1 class="">All Roles </h1>
+    </div>
 
 
-<br />
-<br />
-    <div class="Searh w-75  m-auto my-3">
+
+    <div class="Searh  m-auto my-3">
         <form asp-action="Index" class=" d-flex justify-content-center gap-3">
             <input type="text" id="InputSearch" name="InputSearch" class="form-control" />
             <input type="submit" value="Search" class="btn btn-success p-3 rounded-2" />
         </form>
     </div>
-   <a  asp-action="Create" class="btn btn-primary my-3">Create Role</a>
-<br />
-<br />
-<br />
-@if (Model.Count() > 0)
-{
+    <a asp-action="Create" class="btn btn-success my-3">Create Role</a>
+
+    @if (Model.Count() > 0)
+    {
 
 
         <div class=" BodeAllEmps">
-            <table class="table table-striped table-hover text-center ">
+            <table class="table table-striped table-hover text-center small ">
                 <thead>
                     <tr>
                         <th>@Html.DisplayNameFor(U => U.Id)</th>
                         <th>@Html.DisplayNameFor(U => U.RoleName)</th>
 
 
-                        <th>Details</th>              
+                        <th>Details</th>
                         <th>Update</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach (var Role in Model)
-                {
-                            <tr>
+                    @foreach (var Role in Model)
+                    {
+                        <tr>
 
-                                <td>@Role.Id</td>
-                                <td>@Role.RoleName</td>
+                            <td>@Role.Id</td>
+                            <td>@Role.RoleName</td>
 
 
-                                <partial name="ButtonsPartialView" model="@Role.Id"></partial>
+                            <partial name="ButtonsPartialView" model="@Role.Id"></partial>
 
-                            </tr>
-                }
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
 
-}
-else
-{
+    }
+    else
+    {
         <div class="mt-4 alert alert-warning">
             <h4>There is No Roles :(</h4>
         </div>
-}
+    }
+
+</div>
