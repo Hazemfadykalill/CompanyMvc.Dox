@@ -5,6 +5,7 @@ using CompanyMvc.Dox.DAL.Model;
 using CompanyMvc.Dox.PL.HelperLogic;
 using CompanyMvc.Dox.PL.ViewModels.Employee;
 using CompanyMvc.Dox.PL.ViewModels.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CompanyMvc.Dox.PL.Controllers
 {
-	public class UserController : Controller
+    [Authorize(Roles = "Admin")]
+    public class UserController : Controller
 	{
 		private readonly UserManager<ApplicationUser> userManager;
 

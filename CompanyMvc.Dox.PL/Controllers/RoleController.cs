@@ -1,6 +1,7 @@
 ﻿using CompanyMvc.Dox.DAL.Model;
 using CompanyMvc.Dox.PL.ViewModels.Roles;
 using CompanyMvc.Dox.PL.ViewModels.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CompanyMvc.Dox.PL.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManger;

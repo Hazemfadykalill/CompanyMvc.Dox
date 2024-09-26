@@ -212,5 +212,10 @@ namespace CompanyMvc.Dox.PL.Controllers
 
 			return View();
 		}
-	}
+
+        public IActionResult AccessDenied()
+		{
+			return View();
+		}
+    }
 }
