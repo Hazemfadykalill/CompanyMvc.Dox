@@ -4,46 +4,57 @@
 @{
     ViewData["Title"] = "Index";
 }
-<div class="w-100 m-5 text-center bg-dark shadow p-5 rounded-3"
-    > <h1 class="text-white ">All Department </h1></div>
+<div class="IndexDepartment After mt-3">
 
-<a asp-controller="Department" asp-action="Create" class="btn btn-primary">Create Department</a>
-<br />
-<br />
-
-@if (Model.Count() > 0)
-{
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(D => D.Code)</th>
-                <th>@Html.DisplayNameFor(D => D.Name)</th>
-                <th>@Html.DisplayNameFor(D => D.DateOfCreation)</th>
-                <th>Details</th>
-                <th>Update</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var department in Model)
-            {
-                <tr>
-                    <td>@department.Code</td>
-                    <td>@department.Name</td>
-                    <td>@department.DateOfCreation</td>
-                    <partial name="ButtonsPartialView" model="@department.Id.ToString()"></partial>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-}
-else
-{
-    <div class="mt-4 alert alert-warning">
-        <h4>There is No Department :(</h4>
+    <div class="w-100  text-center mb-3">
+        <h1 class="w-100 mb-3 text-center ">All Department </h1>
     </div>
-}
+
+    <a asp-controller="Department" asp-action="Create" class="btn btn-success m">Create Department</a>
+    <div class="Searh  my-4">
+        <form asp-action="Index" class=" d-flex justify-content-center gap-3">
+            <input type="text" id="InputSearch" name="InputSearch" class="form-control" />
+            <input type="submit" value="Search" class="btn btn-success p-3 rounded-2" />
+        </form>
+    </div>
+
+    @if (Model.Count() > 0)
+    {
+        <div class="BodeAllDept">
+            <table class="table table-striped table-hover small">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(D => D.Code)</th>
+                        <th>@Html.DisplayNameFor(D => D.Name)</th>
+                        <th>@Html.DisplayNameFor(D => D.DateOfCreation)</th>
+                        <th>Details</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var department in Model)
+                    {
+                        <tr>
+                            <td>@department.Code</td>
+                            <td>@department.Name</td>
+                            <td>@department.DateOfCreation</td>
+                            <partial name="ButtonsPartialView" model="@department.Id.ToString()"></partial>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+    }
+    else
+    {
+        <div class="mt-4 alert alert-warning">
+            <h4>There is No Department :(</h4>
+        </div>
+    }
+</div>
 
 
 
