@@ -13,7 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CompanyMvc.Dox.PL.Controllers
 {
-    [Authorize(Roles = "Admin")]
+   // [Authorize(Roles = "Admin")]
     public class UserController : Controller
 	{
 		private readonly UserManager<ApplicationUser> userManager;

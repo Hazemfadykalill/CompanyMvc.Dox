@@ -2,15 +2,21 @@
 @{
     ViewData["Title"] = "Details";
 }
-<div class="w-100 m-5 text-center bg-dark shadow p-5 rounded-3">
-    <h1 class="text-white ">Employee Details </h1>
+<div class="DetailsEmployee After shadow px-5 py-3 rounded-2 my-2 ">
+    <div class="w-100 mb-3 text-center">
+    <h1 class=" ">Employee Detail </h1>
 </div>
 <div>
     <partial name="PartialView/PartialViewToDetailsAndDelete" ></partial>
 
-    <a asp-controller="Employee" asp-all-route-id="@Model.Id" asp-action="Update" class="btn btn-warning">Update</a>
-    <a asp-controller="Employee" asp-action="Index" class="btn btn-light">Back To List</a>
+   
+
+        <div class="d-flex justify-content-between  my-3">
+            <a   asp-action="Update" class="btn btn-success">Update</a>
+            <a  asp-action="Index" class="btn btn-warning">Back To List</a>
+        </div>
 </div>
 
+</div>
 
 

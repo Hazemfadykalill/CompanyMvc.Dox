@@ -2,16 +2,18 @@
 @{
     ViewData["Title"] = "Create";
 }
-<div class="w-100 m-5 text-center bg-dark shadow p-5 rounded-3">
-    <h1 class="text-white ">Create New Employee </h1>
+<div class="CreateNewEmployee After shadow px-5 py-3 rounded-2 my-2 ">
+    <div class="w-100 mb-3 text-center ">
+        <h1 class=" ">Create New Employee </h1>
+    </div>
+    <form asp-action="Create" asp-controller="Employee" enctype="multipart/form-data">
+        <!-- <div asp-validation-summary="All" class="w-100 h-25 justify-content-center p-5 m-5 rounded-3 shadow bg-danger"></div> -->
+        <partial name="PartialView/PartialViewToCreateAndUpdate" model="Model"></partial>
+        <input hidden asp-for="ImageName" />
+        <input type="submit" value="Create" class="btn btn-success my-2 " />
+        <a asp-controller="Employee" asp-action="Index" class="btn btn-light">Back To List</a>
+    </form>
 </div>
-<form asp-action="Create" asp-controller="Employee" enctype="multipart/form-data">
-    <div asp-validation-summary="All" class="w-100 h-25 justify-content-center p-5 m-5 rounded-3 shadow bg-danger"></div>
-    <partial name="PartialView/PartialViewToCreateAndUpdate" model="Model"></partial>
-    <input hidden asp-for="ImageName"/>
-    <input type="submit" value="Create" class="btn btn-primary my-2 " />
-    <a asp-controller="Employee" asp-action="Index" class="btn btn-light">Back To List</a>
-</form>
 
     
 @section ClientSideValidationByHazem{
