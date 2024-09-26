@@ -56,7 +56,7 @@
                         <td>@emp.HiringDate</td>
                         <td>@Html.DisplayFor(D => emp.IsActivated)</td>
 
-                        <partial name="ButtonsPartialView" model="@emp.Id"></partial>
+                        <partial name="ButtonsPartialView" model="@emp.Id.ToString()"></partial>
 
                     </tr>
                 }
