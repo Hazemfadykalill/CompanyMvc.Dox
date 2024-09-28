@@ -11,7 +11,7 @@
             // in previous Line Is Static In Your PC So That We Need Make Dynamic
             //string FilePath = Directory.GetCurrentDirectory() + @"\wwwroot\Files\" + FileName;
             //or  + is Combine
-           string FolderPath = Path.Combine(Directory.GetCurrentDirectory() ,@"wwwroot\Files" , FolderName);
+           string FolderPath = Path.Combine(Directory.GetCurrentDirectory() ,"wwwroot\\Files" , FolderName);
 
             //2. Get File Name
             if (file != null)

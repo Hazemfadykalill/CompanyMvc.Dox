@@ -62,30 +62,9 @@ namespace CompanyMvc.Dox.PL.Controllers
             {
                 try
                 {
-                    model.ImageName = DocumentSettings.UploadingFile(model.Image,"Images");
+                    model.ImageName = DocumentSettings.UploadingFile(model.Image!,"Images");
 
-                    //casting from empViewModel (ViewModel) To EmpModel (Employee)
-                    //Mapping
-                    //1.Manual Mapping
-
-                    //Employee employee = new Employee()
-                    //{
-                    //    Id = model.Id,
-                    //    Name = model.Name,
-                    //    Address = model.Address,
-                    //    Age = model.Age,
-                    //    Email = model.Email,
-                    //    Salary = model.Salary,
-                    //    HiringDate = model.HiringDate,
-                    //    IsActivated = model.IsActivated,
-                    //    WorkFor = model.WorkFor,
-                    //    WorkForId = model.WorkForId,
-                    //    phoneNumber = model.phoneNumber
-
-
-
-                    //};
-                    //2.Automatic Mapping
+                    
                     var employee=mapper.Map<Employee>(model);
                     var count = await  unitOfWork.EmployeeRepository.AddAsync(employee);
                   
