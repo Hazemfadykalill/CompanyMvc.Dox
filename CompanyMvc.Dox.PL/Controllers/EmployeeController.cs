@@ -36,14 +36,14 @@ namespace CompanyMvc.Dox.PL.Controllers
             if (InputSearch.IsNullOrEmpty())
             {
 
-                AllEmps =await unitOfWork.EmployeeRepository.GetAllAsync();
+                AllEmps = await unitOfWork.EmployeeRepository.GetAllAsync();
             }
             else
             {
-                AllEmps = await  unitOfWork.EmployeeRepository.GetEmpByNameAsync(InputSearch);
+                AllEmps = await unitOfWork.EmployeeRepository.GetEmpByNameAsync(InputSearch);
             }
 
-            var Result=mapper.Map<IEnumerable<EmployeeViewModel>>(AllEmps);
+            var Result = mapper.Map<IEnumerable<EmployeeViewModel>>(AllEmps);
             return View(Result);
         }
 
@@ -62,16 +62,16 @@ namespace CompanyMvc.Dox.PL.Controllers
             {
                 try
                 {
-                    model.ImageName = DocumentSettings.UploadingFile(model.Image!,"Images");
+                    model.ImageName = DocumentSettings.UploadingFile(model.Image!, "Images");
 
-                    
-                    var employee=mapper.Map<Employee>(model);
-                    var count = await  unitOfWork.EmployeeRepository.AddAsync(employee);
-                  
+
+                    var employee = mapper.Map<Employee>(model);
+                    var count = await unitOfWork.EmployeeRepository.AddAsync(employee);
+
                     return RedirectToAction(nameof(Index));
-                 
 
-                   
+
+
                 }
                 catch (Exception Ex)
                 {
@@ -92,7 +92,7 @@ namespace CompanyMvc.Dox.PL.Controllers
         {
 
             if (id is null) return BadRequest();
-            var model = await  unitOfWork.EmployeeRepository.GetByIdAsync(id); 
+            var model = await unitOfWork.EmployeeRepository.GetByIdAsync(id);
             if (model is null) return NotFound();
             //casting from empViewModel (ViewModel) To EmpModel (Employee)
             //Mapping
@@ -117,7 +117,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             //};
 
             //2.auto mapping
-           var employeeViewModel=mapper.Map<EmployeeViewModel>(model);
+            var employeeViewModel = mapper.Map<EmployeeViewModel>(model);
             return View(NameView, employeeViewModel);
 
         }
@@ -131,7 +131,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             //if (id is null) return BadRequest();
             //var department = _repository.GetById(id);
             //if (department is null) return NotFound();
-            var department =await unitOfWork.DepartmentRepository.GetAllAsync();
+            var department = await unitOfWork.DepartmentRepository.GetAllAsync();
             ViewData["departments"] = department;
             return await Details(id, "Update");
 
@@ -145,43 +145,25 @@ namespace CompanyMvc.Dox.PL.Controllers
             try
             {
 
-                if (id !=model.Id) return BadRequest()//400
+                if (id != model.Id) return BadRequest()//400
         ;
                 if (ModelState.IsValid)
                 {
-                    ///casting from empViewModel (ViewModel) To EmpModel (Employee)
-                    ///Mapping
-                    ///1.Manual Mapping
-
-                    ///Employee employee = new Employee()
-                    ///{
-                    ///    Id = model.Id,
-                    ///    Name = model.Name,
-                    ///    Address = model.Address,
-                    ///    Age = model.Age,
-                    ///    Email = model.Email,
-                    ///    Salary = model.Salary,
-                    ///    HiringDate = model.HiringDate,
-                    ///    IsActivated = model.IsActivated,
-                    ///    WorkFor = model.WorkFor,
-                    ///    WorkForId = model.WorkForId,
-                    ///    phoneNumber = model.phoneNumber
-                    ///};
 
                     //Images Update
                     if (model.ImageName is not null)
                     {
 
-                        DocumentSettings.DeletingFile(model.ImageName,"Images");
+                        DocumentSettings.DeletingFile(model.ImageName, "Images");
                     }
                     if (model.Image is not null)
                     {
 
                         model.ImageName = DocumentSettings.UploadingFile(model.Image, "Images");
                     }
-                    
+
                     //2. auto mapping
-                    var employee=mapper.Map<Employee>(model);
+                    var employee = mapper.Map<Employee>(model);
                     var count = unitOfWork.EmployeeRepository.Update(employee);
                     if (count > 0)
                     {
@@ -211,7 +193,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             //var department = _repository.GetById(id);
             //if (department is null) return NotFound();
 
-            return await  Details(id, "Delete");
+            return await Details(id, "Delete");
 
         }
         [HttpPost]
@@ -219,47 +201,21 @@ namespace CompanyMvc.Dox.PL.Controllers
         public IActionResult Delete([FromRoute] int? id, EmployeeViewModel model)
 
         {
+            if (id != model.Id) return BadRequest(); //400
             try
             {
-                if (id != model.Id) return BadRequest()//400
         ;
                 if (ModelState.IsValid)
                 {
-                 
-                    //casting from empViewModel (ViewModel) To EmpModel (Employee)
-                    //Mapping
-                    //1.Manual Mapping
-
-                    //Employee employee = new Employee()
-                    //{
-                    //    Id = model.Id,
-                    //    Name = model.Name,
-                    //    Address = model.Address,
-                    //    Age = model.Age,
-                    //    Email = model.Email,
-                    //    Salary = model.Salary,
-                    //    HiringDate = model.HiringDate,
-                    //    IsActivated = model.IsActivated,
-                    //    WorkFor = model.WorkFor,
-                    //    WorkForId = model.WorkForId,
-                    //    phoneNumber = model.phoneNumber
-
-
-
-                    //};
-
-                    //2.auto mapping
                     var employee = mapper.Map<Employee>(model);
 
                     var count = unitOfWork.EmployeeRepository.Remove(employee);
-                    if (count > 0)
+                    if (count > 0 && model.ImageName is not null)
                     {
-                        if (model.ImageName is not null)
-                        {
                             DocumentSettings.DeletingFile(model.ImageName, "Images");
-                        }
-                        return RedirectToAction(actionName: "Index");
+                       
                     }
+                        return RedirectToAction(actionName: "Index");
                 }
             }
             catch (Exception Ex)

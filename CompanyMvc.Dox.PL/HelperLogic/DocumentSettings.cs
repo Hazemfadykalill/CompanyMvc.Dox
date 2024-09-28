@@ -38,7 +38,7 @@
         public static void DeletingFile(string FolderName,string FileName)
         {
             // 1. get FilePath (folderPath + filename)
-           string FilePath = Path.Combine(Directory.GetCurrentDirectory() ,@"wwwroot\Files" , FolderName,FileName);
+           string FilePath = Path.Combine(Directory.GetCurrentDirectory() ,"wwwroot\\Files" , FolderName,FileName);
             // 2. I am Delete This File But Should Know this file exists yes Or No
             if(File.Exists(FilePath))
                 File.Delete(FilePath);
