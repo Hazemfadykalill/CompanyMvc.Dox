@@ -137,8 +137,7 @@ namespace CompanyMvc.Dox.PL.Controllers
 
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-
+        [ValidateAntiForgeryToken] 
         public IActionResult Update([FromRoute] int? id, EmployeeViewModel model)
 
         {
@@ -151,7 +150,7 @@ namespace CompanyMvc.Dox.PL.Controllers
                 {
 
                     //Images Update
-                    if (model.ImageName is not null)
+                    if (model.ImageName is not null)  
                     {
 
                         DocumentSettings.DeletingFile(model.ImageName, "Images");
