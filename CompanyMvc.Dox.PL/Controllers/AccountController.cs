@@ -28,9 +28,9 @@ namespace CompanyMvc.Dox.PL.Controllers
 		[HttpPost]
 		public async Task<IActionResult> SignUp(SignUpViewModel model)
 		{
-			if (ModelState.IsValid)
+			if (ModelState.IsValid)//server side validation
 			{
-				try
+				try 
 				{
 					var User = await userManger.FindByNameAsync(model.UserName);
 					if (User is null)
@@ -93,7 +93,7 @@ namespace CompanyMvc.Dox.PL.Controllers
 					
 
 					var User =await userManger.FindByEmailAsync(model.Email);
-					if (User is not  null)
+					if (User is not  null) 
 					{
 					
 						//Password
@@ -101,7 +101,7 @@ namespace CompanyMvc.Dox.PL.Controllers
 						if (Result)
 						{
 							//login
-							var result=await signInManager.PasswordSignInAsync(User,model.Password,model.RememberMe,false);
+							var result=await signInManager.PasswordSignInAsync(User,model.Password,model.RememberMe,false);//this PasswordSignInAsync that create token with each login ya am hazem
 							if (result.Succeeded)
 							{
 

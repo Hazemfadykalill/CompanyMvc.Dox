@@ -4,15 +4,27 @@
     ViewData["Title"] = "SignUp";
     Layout = "~/Views/Shared/_AuthLayout.cshtml";
 }
-<div asp-validation-summary="All" class="my-3"></div>
+<div asp-validation-summary="All" class="my-3"></div> 
 <div>
 	<form asp-action="SignUp" asp-controller="Account">
-		<input class="text my-2" asp-for="UserName" placeholder="Username" required="">
+		<input class="text my-2" asp-for="UserName" placeholder="Username"   required="">
+		<span asp-validation-for="UserName"></span>
+		<br />
 		<input class="text my-2 " asp-for="FirstName" placeholder="FirstName" required="">
+		<span asp-validation-for="FirstName"></span>
+		<br />
 		<input class="text my-2 " asp-for="LastName" placeholder="LastName" required="">
+		<span asp-validation-for="LastName"></span>
+		<br />
 		<input class="text my-2  email" asp-for="Email" placeholder="Email" required="">
+		<span asp-validation-for="Email"></span>
+		<br />
 		<input class="text my-2 " asp-for="Password" placeholder="Password" required="">
+		<span asp-validation-for="Password"></span>
+		<br />
 		<input class="text my-2  w3lpass" asp-for="ConfirmedPassword" placeholder="ConfirmedPassword" required="">
+		<span asp-validation-for="ConfirmedPassword"></span>
+		<br />
 		<div class="wthree-text">
 			<label class="anim">
 				<input type="checkbox" asp-for="IsAgree" class="checkbox" required="">
@@ -23,7 +35,7 @@
 		<input type="submit" value="SignUp">
 	</form>
 
-	<p>You have an Account? <a asp-action="Login" asp-controller="Account"> Login Now!</a></p>
+	<p>Do You have an Account? <a asp-action="Login" asp-controller="Account"> Login Now!</a></p>
 	
 </div>
 

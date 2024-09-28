@@ -39,6 +39,7 @@ namespace CompanyMvc.Dox.PL
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 			builder.Services.AddAutoMapper(typeof(EmployeeProfile));
+
             builder.Services.ConfigureApplicationCookie(
                 config =>
                 {
