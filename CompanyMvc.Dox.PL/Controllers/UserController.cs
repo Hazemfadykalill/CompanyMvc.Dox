@@ -13,8 +13,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CompanyMvc.Dox.PL.Controllers
 {
-   // [Authorize(Roles = "Admin")]
-    public class UserController : Controller
+	// [Authorize(Roles = "Admin")]
+	public class UserController : Controller
 	{
 		private readonly UserManager<ApplicationUser> userManager;
 
@@ -34,7 +34,7 @@ namespace CompanyMvc.Dox.PL.Controllers
 					Id = U.Id,
 					FirstName = U.FirstName,
 					LastName = U.LastName,
-					Email = U.Email,
+					Email = U.Email!,
 					Roles = userManager.GetRolesAsync(U).Result,
 				}).ToListAsync();
 
@@ -42,7 +42,7 @@ namespace CompanyMvc.Dox.PL.Controllers
 			}
 			else
 			{
-				users = await userManager.Users.Where(U => U.Email.ToLower().Contains(InputSearch.ToLower())).Select(U => new UserViewModel()
+				users = await userManager.Users.Where(U => U.Email!.ToLower().Contains(InputSearch.ToLower())).Select(U => new UserViewModel()
 				{
 					Id = U.Id,
 					FirstName = U.FirstName,
@@ -56,131 +56,131 @@ namespace CompanyMvc.Dox.PL.Controllers
 		}
 
 
-        public async Task<IActionResult> Details(string? id, string NameView = "Details")
+		public async Task<IActionResult> Details(string? id, string NameView = "Details")
 
-        {
+		{
 
-            if (id is null) return BadRequest();
-			var userFromDb =await userManager.FindByIdAsync(id);
-            if (userFromDb is null) return NotFound();
+			if (id is null) return BadRequest();
+			var userFromDb = await userManager.FindByIdAsync(id);
+			if (userFromDb is null) return NotFound();
 
 			var user = new UserViewModel()
 			{
-				Id= userFromDb.Id,
+				Id = userFromDb.Id,
 				FirstName = userFromDb.FirstName,
-					LastName = userFromDb.LastName,
-					Roles=await userManager.GetRolesAsync(userFromDb)
-            };
-            
-            return View(NameView, user);
+				LastName = userFromDb.LastName,
+				Roles = await userManager.GetRolesAsync(userFromDb)
+			};
 
-        }
+			return View(NameView, user);
 
-
-        //Update
-
-        public async Task<IActionResult> Update(string? id)
-
-        {
-
-         
-            return await Details(id, "Update");
-
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-
-        public async Task<IActionResult> Update([FromRoute] string? id, UserViewModel model)
-
-        {
-            try
-            {
-
-                if (id != model.Id) return BadRequest()//400
-        ;
-                if (ModelState.IsValid)
-                {
-
-              
-                    var userFromDb = await userManager.FindByIdAsync(id);
-                    if (userFromDb is null) return NotFound();
-
-                
-                        userFromDb.FirstName = model.FirstName;
-                    userFromDb.LastName = model.LastName;
-                    userFromDb.Email = model.Email;
-                    var result = await userManager.UpdateAsync(userFromDb);
-                   
-                   if (result.Succeeded)
-                    {
-                        return RedirectToAction(actionName: "Index");
-
-                    }
-                  
-                }
-            }
-            catch (Exception Ex)
-            {
-
-                ModelState.AddModelError(string.Empty, Ex.Message);
-            }
+		}
 
 
-            return View(model);
+		//Update
+		[HttpGet]
+		public async Task<IActionResult> Update(string? id)
 
-        }
-
-
-        //Delete
-        [HttpGet]
-        public async Task<IActionResult> Delete(string? id)
-
-        {
-
-         
-
-            return await Details(id, "Delete");
-
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete([FromRoute] string? id, UserViewModel model)
-
-        {
-            try
-            {
-                if (id != model.Id) return BadRequest()//400
-         ;
-                if (ModelState.IsValid)
-                {
+		{
 
 
-                    var userFromDb = await userManager.FindByIdAsync(id);
-                    if (userFromDb is null) return NotFound();
+			return await Details(id, "Update");
+
+		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Update([FromRoute] string? id, UserViewModel model)
+
+		{
+			if (id != model.Id) return BadRequest();//400
+			try
+			{
 
 
-                    userFromDb.FirstName = model.FirstName;
-                    userFromDb.LastName = model.LastName;
-                    userFromDb.Email = model.Email;
-                    var result = await userManager.DeleteAsync(userFromDb);
-
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction(actionName: "Index");
-
-                    }
-
-                }
-            }
-            catch (Exception Ex)
-            {
-
-                ModelState.AddModelError(string.Empty, Ex.Message);
-            }
+				if (ModelState.IsValid)
+				{
 
 
-            return View(model);
+					var userFromDb = await userManager.FindByIdAsync(id!);
+					if (userFromDb is null) return NotFound();
 
-        }
-    }
+
+					userFromDb.FirstName = model.FirstName!;
+					userFromDb.LastName = model.LastName!;
+					userFromDb.Email = model.Email!;
+					var result = await userManager.UpdateAsync(userFromDb);
+
+					if (result.Succeeded)
+					{
+						return RedirectToAction(actionName: "Index");
+
+					}
+
+				}
+			}
+			catch (Exception Ex)
+			{
+
+				ModelState.AddModelError(string.Empty, Ex.Message);
+			}
+
+
+			return View(model);
+
+		}
+
+
+		//Delete
+		[HttpGet]
+		public async Task<IActionResult> Delete(string? id)
+
+		{
+
+
+
+			return await Details(id, "Delete");
+
+		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Delete([FromRoute] string? id, UserViewModel model)
+
+		{
+			try
+			{
+				if (id != model.Id) return BadRequest();
+		 
+				if (ModelState.IsValid)
+				{
+
+
+					var userFromDb = await userManager.FindByIdAsync(id!);
+					if (userFromDb is null) return NotFound();
+
+
+					userFromDb.FirstName = model.FirstName!;
+					userFromDb.LastName = model.LastName!;
+					userFromDb.Email = model.Email;
+					var result = await userManager.DeleteAsync(userFromDb);
+
+					if (result.Succeeded)
+					{
+						return RedirectToAction(actionName: "Index");
+
+					}
+
+				}
+			}
+			catch (Exception Ex)
+			{
+
+
+				ModelState.AddModelError(string.Empty, Ex.Message);
+			}
+
+
+			return View(model);
+
+		}
+	}
 }

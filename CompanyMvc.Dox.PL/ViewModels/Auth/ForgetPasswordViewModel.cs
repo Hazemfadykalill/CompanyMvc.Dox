@@ -7,6 +7,6 @@ namespace CompanyMvc.Dox.PL.ViewModels.Auth
         [Required(ErrorMessage ="This Email Is Required!!")]
         [EmailAddress(ErrorMessage ="Invalid Email!!")]
         
-        public string Email { get; set; }
+        public string? Email { get; set; }
     }
 }

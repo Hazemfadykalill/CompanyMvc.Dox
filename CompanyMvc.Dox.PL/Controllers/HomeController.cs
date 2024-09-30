@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CompanyMvc.Dox.PL.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
