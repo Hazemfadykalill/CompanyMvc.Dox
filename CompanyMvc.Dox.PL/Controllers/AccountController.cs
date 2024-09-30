@@ -130,7 +130,7 @@ namespace CompanyMvc.Dox.PL.Controllers
         //Log Out
         public async Task<IActionResult> LogOut()
         {
-            await signInManager.SignOutAsync();	
+            await signInManager.SignOutAsync();	//this line delete My token that it emit enter to web page .
 			return RedirectToAction("Login");
 
         }
