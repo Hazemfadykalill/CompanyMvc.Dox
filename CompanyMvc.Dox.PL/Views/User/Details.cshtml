@@ -4,15 +4,13 @@
 }
 <div class="DetailsUsers After shadow px-5 py-3 rounded-2 my-2 ">
     <div class="w-100 mb-3 text-center">
-        <h1 class=" ">User  Details </h1>
+        <h1 class=" "> @Model.FirstName @Model.LastName Details </h1>
     </div>
     <div>
         <partial name="UserPartialView/PartialViewToDetailsAndDelete"></partial>
 
-      
-
         <div class="d-flex justify-content-between  my-3">
-            <a asp-controller=" User" asp-all-route-id="@Model.Id" asp-action="Update" class="btn btn-success">Update</a>
+            <a asp-controller=" User" asp-route-id="@Model.Id" asp-action="Update" class="btn btn-success">Update</a>
             <a asp-controller="User" asp-action="Index" class="btn btn-warning">Back To List</a>
         </div>
     </div>
