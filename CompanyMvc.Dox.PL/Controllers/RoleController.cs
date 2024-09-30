@@ -37,7 +37,7 @@ namespace CompanyMvc.Dox.PL.Controllers
             }
             else
             {
-                users = await roleManger.Roles.Where(R => R.Name.ToLower().Contains(InputSearch.ToLower())).Select(R => new RoleViewModel()
+                users = await roleManger.Roles.Where(R => R.Name!.ToLower().Contains(InputSearch.ToLower())).Select(R => new RoleViewModel()
                 {
                     Id = R.Id,
                     RoleName = R.Name!
@@ -96,7 +96,7 @@ namespace CompanyMvc.Dox.PL.Controllers
 
 
         //Update
-
+        [HttpGet]
         public async Task<IActionResult> Update(string? id)
 
         {

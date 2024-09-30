@@ -15,21 +15,20 @@
 
     <form asp-action="Update">
 
-        <div asp-validation-summary="All" class="w-100 h-25 justify-content-center p-5 m-5 rounded-3 shadow bg-danger"></div>
 
         <partial name="RolePartialView/PartialViewToCreateAndUpdate"></partial>
 
-        <a asp-action="AddOrRemoveUser" asp-route-roleId="@Model.Id" class="btn btn-light">Add Or Remove User</a>
 
 
 
         <div class="d-flex justify-content-between  my-3">
-            <input type="submit" value="Update" class="btn btn-success  />
-            <a asp-controller="Role" asp-action="Index" class="btn btn-warning">Back To List</a>
+            <input type="submit" value="Update" class="btn btn-success" />
+            <a  asp-action="Index" class="btn btn-warning">Back To List</a>
 
         </div>
     </form>
 
+        <a asp-action="AddOrRemoveUser" asp-route-roleId="@Model.Id" class="btn btn-primary my-3">Add Or Remove User</a>
     @section ClientSideValidationByHazem {
 
 
